@@ -1,0 +1,9 @@
+body {
+    color: #000000;
+}
+
+.movies td {
+    border: #e0e0e0 solid 1px;
+    font-size: 18px;
+    padding: 5px;
+}
