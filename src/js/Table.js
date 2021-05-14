@@ -8,30 +8,38 @@ export default class Table {
     this.arrayToTable(input);
   }
 
-  sort(by) {
+  sort(by, order = 1) {
     const rows = Array.from(this.table.querySelectorAll(`tr[data-${by}]`));
     if (Number.isNaN(+rows[0].dataset[by])) {
       rows.sort((a, b) => {
         if (a.dataset[by] > b.dataset[by]) {
-          return 1;
+          return 1 * order;
         }
         if (a.dataset[by] < b.dataset[by]) {
-          return -1;
+          return -1 * order;
         }
         return 0;
       });
     } else {
-      rows.sort((a, b) => a.dataset[by] - b.dataset[by]);
+      rows.sort((a, b) => (a.dataset[by] - b.dataset[by]) * order);
     }
     this.arrayToTable(rows.map((item) => item.dataset));
+
+    const arrow = this.table.querySelector(`.${by}`);
+    if (order === 1) {
+      arrow.classList.add('order_asc');
+    } else {
+      arrow.classList.add('order_desc');
+    }
   }
 
   arrayToTable(array) {
     this.table.innerHTML = '';
 
     const firstRow = document.createElement('tr');
-    ['id', 'titles', 'year', 'imdb'].forEach((element) => {
+    ['id', 'title', 'year', 'imdb'].forEach((element) => {
       const td = document.createElement('td');
+      td.classList.add(element);
       td.innerText = element;
       firstRow.append(td);
     });

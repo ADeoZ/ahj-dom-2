@@ -35,4 +35,15 @@ const input = `[
 
 const table = new Table();
 table.JSONtoTable(input);
-table.sort('title');
+
+const sortFields = ['id', 'title', 'year', 'imdb'];
+let curField = 0;
+let order = -1;
+
+setInterval(() => {
+  order *= -1;
+  table.sort(sortFields[curField], order);
+  if (order === -1) {
+    curField = curField === sortFields.length - 1 ? 0 : curField + 1;
+  }
+}, 2000);
